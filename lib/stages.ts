@@ -61,13 +61,37 @@ export function getStages(style: StyleKey): Stage[] {
     return Array.from({ length: 20 }).map((_, i) => {
       const isChest = (i + 1) % 5 === 0
       return {
-        id: `auditory-${i}`,
-        title: isChest ? `Block ${Math.floor(i / 5) + 1} Review` : `Lesson ${i + 1}`,
+        id: `auditory-${i + 1}`,
+        title: `Listen & Learn ${i + 1}`,
+        description: `Auditory module ${i + 1}`,
         kind: isChest ? "chest" : "lesson",
+        color: "bg-blue-500",
+      }
+    })
+  }
+  if (style === "kinesthetic") {
+    return Array.from({ length: 8 }).map((_, i) => {
+      const isChest = i === 7 // last stage is results chest
+      const labels = [
+        "Color Lab",
+        "Bridge Builder",
+        "Water Path",
+        "Animal House",
+        "Garden Creator",
+        "Puppy Maze",
+        "Playground",
+        "Your Results",
+      ]
+      return {
+        id: `kinesthetic-${i + 1}`,
+        title: labels[i],
+        description: `Kinesthetic activity ${i + 1}`,
+        kind: isChest ? "chest" : "lesson",
+        color: "bg-green-500",
       }
     })
   }
   return BASE_STAGES
 }
 
-export const TOTAL_STAGES = Math.max(BASE_STAGES.length, RW_STAGES.length, 20)
+export const TOTAL_STAGES = Math.max(BASE_STAGES.length, RW_STAGES.length, 20, 8)

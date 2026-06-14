@@ -18,6 +18,7 @@ import { getStages, MODULE_SECTIONS, type Stage, type StageKind } from "@/lib/st
 import { cn } from "@/lib/utils"
 import { RWLessonPlayer } from "./rw-lesson-player"
 import { AuditoryLearningLesson } from "../auditory/AuditoryApp"
+import { KinestheticApp } from "../kinesthetic/KinestheticApp"
 
 const KIND_ICON: Record<StageKind, typeof Star> = {
   lesson: Star,
@@ -40,6 +41,7 @@ export function StagePath({ style }: { style: StyleKey }) {
   )
   const [activeRWLesson, setActiveRWLesson] = useState<string | null>(null)
   const [activeAuditoryLesson, setActiveAuditoryLesson] = useState<number | null>(null)
+  const [activeKinestheticLesson, setActiveKinestheticLesson] = useState<number | null>(null)
 
   function status(index: number): "done" | "active" | "locked" {
     if (index < completed) return "done"
@@ -153,6 +155,8 @@ export function StagePath({ style }: { style: StyleKey }) {
                         setActiveRWLesson(stage.id)
                       } else if (style === "auditory") {
                         setActiveAuditoryLesson(i)
+                      } else if (style === "kinesthetic") {
+                        setActiveKinestheticLesson(i)
                       } else {
                         setOpenStage({ stage, index: i })
                       }
@@ -196,6 +200,22 @@ export function StagePath({ style }: { style: StyleKey }) {
             </div>
           )
         })}
+
+        {activeKinestheticLesson !== null && (
+          <KinestheticApp
+            levelIndex={activeKinestheticLesson}
+            onComplete={(score) => {
+              if (activeKinestheticLesson === completed) {
+                update({
+                  progress: { ...profile.progress, [style]: completed + 1 },
+                  sparks: profile.sparks + 10,
+                })
+              }
+              setActiveKinestheticLesson(null)
+            }}
+            onClose={() => setActiveKinestheticLesson(null)}
+          />
+        )}
       </div>
 
       {/* stage dialog */}
