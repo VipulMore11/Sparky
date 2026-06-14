@@ -1,9 +1,11 @@
 "use client"
 
+import { usePathname } from "next/navigation"
 import { Flame, Gem, Heart, Lock, Zap, Trophy } from "lucide-react"
 import { useProfile } from "@/lib/use-profile"
-import { LEARNING_STYLES } from "@/lib/learning-styles"
+import { LEARNING_STYLES, type StyleKey } from "@/lib/learning-styles"
 import { TOTAL_STAGES, getStages } from "@/lib/stages"
+import { cn } from "@/lib/utils"
 
 export function TopStats() {
   const { profile } = useProfile()
@@ -24,17 +26,27 @@ export function TopStats() {
   )
 }
 
-import { cn } from "@/lib/utils"
-
 export function RightRail() {
   const { profile } = useProfile()
-  const primary = profile.primaryStyle
-  const done = primary ? profile.progress[primary] : 0
+  const pathname = usePathname()
   
   // Calculate total modules/lessons done across all styles
   const totalModulesDone = Object.values(profile.progress).reduce((a, b) => a + b, 0)
   const remaining = Math.max(0, 3 - totalModulesDone)
   const isLeaderboardUnlocked = remaining === 0
+
+  // Extract style from pathname if we are on a specific path
+  let currentStyle: StyleKey | null = null
+  if (pathname) {
+    const match = pathname.match(/\/learn\/([^\/]+)/)
+    if (match && Object.keys(LEARNING_STYLES).includes(match[1])) {
+      currentStyle = match[1] as StyleKey
+    }
+  }
+
+  const displayStyle = currentStyle || profile.primaryStyle
+  const done = displayStyle ? profile.progress[displayStyle] : 0
+  const totalDisplayStages = displayStyle ? getStages(displayStyle).length : TOTAL_STAGES
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -82,24 +94,24 @@ export function RightRail() {
         </div>
       </section>
 
-      {/* style spotlight (replaces 'create a profile') */}
-      {primary && (
+      {/* style spotlight */}
+      {displayStyle && (
         <section className="rounded-2xl border-2 border-border bg-card p-5">
-          <h3 className="font-extrabold">Your top style</h3>
+          <h3 className="font-extrabold">{currentStyle ? "Current Track" : "Your top style"}</h3>
           <div className="mt-3 flex items-center gap-3">
             <span
               className="flex h-12 w-12 items-center justify-center rounded-xl"
               style={{
-                background: LEARNING_STYLES[primary].colorVar,
+                background: LEARNING_STYLES[displayStyle].colorVar,
                 color: "var(--background)",
               }}
             >
               <Trophy className="h-6 w-6" />
             </span>
             <div>
-              <p className="font-bold">{LEARNING_STYLES[primary].name}</p>
+              <p className="font-bold">{LEARNING_STYLES[displayStyle].name}</p>
               <p className="text-xs text-muted-foreground">
-                {done}/{getStages(primary).length} stages done
+                {done}/{totalDisplayStages} stages done
               </p>
             </div>
           </div>
@@ -112,3 +124,4 @@ export function RightRail() {
     </div>
   )
 }
+

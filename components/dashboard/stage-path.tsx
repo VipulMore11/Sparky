@@ -58,7 +58,7 @@ export function StagePath({ style }: { style: StyleKey }) {
   }
 
   const handleStartStage = (index: number) => {
-    if (style === "auditory") {
+    if (style === "auditory" || style === "visual") {
       setActiveLessonIndex(index)
       setOpenStage(null)
     } else {
@@ -66,19 +66,32 @@ export function StagePath({ style }: { style: StyleKey }) {
     }
   }
 
-  if (activeLessonIndex !== null && style === "auditory") {
-    // Dynamically import to avoid circular dependencies if any
-    const { AuditoryLearningLesson } = require("@/components/auditory/AuditoryApp")
-    return (
-      <AuditoryLearningLesson
-        levelIndex={activeLessonIndex}
-        onComplete={(score: number) => {
-          if (activeLessonIndex === completed) completeStage(activeLessonIndex)
-          setActiveLessonIndex(null)
-        }}
-        onClose={() => setActiveLessonIndex(null)}
-      />
-    )
+  if (activeLessonIndex !== null) {
+    if (style === "auditory") {
+      const { AuditoryLearningLesson } = require("@/components/auditory/AuditoryApp")
+      return (
+        <AuditoryLearningLesson
+          levelIndex={activeLessonIndex}
+          onComplete={(score: number) => {
+            if (activeLessonIndex === completed) completeStage(activeLessonIndex)
+            setActiveLessonIndex(null)
+          }}
+          onClose={() => setActiveLessonIndex(null)}
+        />
+      )
+    } else if (style === "visual") {
+      const { VisualLearningLesson } = require("@/components/visual/VisualApp")
+      return (
+        <VisualLearningLesson
+          levelIndex={activeLessonIndex}
+          onComplete={(score: number) => {
+            if (activeLessonIndex === completed) completeStage(activeLessonIndex)
+            setActiveLessonIndex(null)
+          }}
+          onClose={() => setActiveLessonIndex(null)}
+        />
+      )
+    }
   }
 
   const points = stages.map((stage, i) => {
@@ -258,6 +271,8 @@ export function StagePath({ style }: { style: StyleKey }) {
               <SpeechBubble tail="left" className="text-sm">
                 {style === "auditory"
                   ? "Ready for a listening challenge?"
+                  : style === "visual"
+                  ? "Time to see it to learn it!"
                   : `This stage is a placeholder for now — soon it'll have a fun ${meta.shortName.toLowerCase()}-style activity!`}
               </SpeechBubble>
             </div>
@@ -267,7 +282,7 @@ export function StagePath({ style }: { style: StyleKey }) {
               onClick={() => handleStartStage(openStage.index)}
               className="mt-5 w-full rounded-2xl border-b-4 border-primary/40 bg-primary py-3 text-base font-extrabold tracking-wide text-primary-foreground transition-all active:translate-y-0.5 active:border-b-2"
             >
-              {openStage.index < completed ? "REVIEW (+0)" : (style === "auditory" ? "START LESSON" : "COMPLETE (+10 Sparks)")}
+              {openStage.index < completed ? "REVIEW (+0)" : ((style === "auditory" || style === "visual") ? "START LESSON" : "COMPLETE (+10 Sparks)")}
             </button>
           </div>
         </div>
@@ -297,16 +312,30 @@ export function StagePath({ style }: { style: StyleKey }) {
             
             <div className="space-y-4 text-sm">
               <p>
-                <strong>Welcome to the Auditory path!</strong>
+                <strong>Welcome to the {meta.name} path!</strong>
               </p>
               <p>
-                If you are an auditory learner, you learn best through listening and speaking. You might notice that you:
+                {style === "auditory" ? 
+                  "If you are an auditory learner, you learn best through listening and speaking. You might notice that you:" :
+                  "If you are a visual learner, you learn best through seeing and observing. You might notice that you:"
+                }
               </p>
               <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                <li>Remember what people say better than what they look like.</li>
-                <li>Like to talk things through or read out loud to understand them.</li>
-                <li>Follow spoken directions well.</li>
-                <li>Enjoy music, rhythms, and patterns in sound.</li>
+                {style === "auditory" ? (
+                  <>
+                    <li>Remember what people say better than what they look like.</li>
+                    <li>Like to talk things through or read out loud to understand them.</li>
+                    <li>Follow spoken directions well.</li>
+                    <li>Enjoy music, rhythms, and patterns in sound.</li>
+                  </>
+                ) : (
+                  <>
+                    <li>Remember what things look like better than what people say.</li>
+                    <li>Like to use diagrams, charts, and colors to understand them.</li>
+                    <li>Follow visual directions well.</li>
+                    <li>Enjoy drawing, patterns, and visual imagery.</li>
+                  </>
+                )}
               </ul>
               
               <div className="mt-6 p-4 rounded-xl bg-muted border border-border">
@@ -314,7 +343,10 @@ export function StagePath({ style }: { style: StyleKey }) {
                   <Mascot size={32} /> Tips for this Path
                 </h4>
                 <p className="text-muted-foreground leading-relaxed">
-                  Make sure your sound is on! You will be asked to listen to prompts, match sounds, and even repeat phrases into your microphone to practice. Don't be afraid to speak up—your voice is the best tool for learning here!
+                  {style === "auditory" ? 
+                    "Make sure your sound is on! You will be asked to listen to prompts, match sounds, and even repeat phrases into your microphone to practice. Don't be afraid to speak up—your voice is the best tool for learning here!" :
+                    "Keep your eyes peeled! You will be asked to identify patterns, complete diagrams, and analyze charts. Take your time to observe the details and match the correct visuals!"
+                  }
                 </p>
               </div>
             </div>
