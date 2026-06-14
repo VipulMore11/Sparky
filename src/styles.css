@@ -1,0 +1,272 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================
+   Kinesthetic Kids — Duolingo-inspired tokens
+   Bright, playful, chunky, friendly.
+   ============================================ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-shadow: var(--primary-shadow);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-shadow: var(--secondary-shadow);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-shadow: var(--accent-shadow);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-sky: var(--sky);
+  --color-grass: var(--grass);
+  --color-sunshine: var(--sunshine);
+  --color-bubble: var(--bubble);
+  --color-water: var(--water);
+
+  --color-paint-red: var(--paint-red);
+  --color-paint-blue: var(--paint-blue);
+  --color-paint-yellow: var(--paint-yellow);
+  --color-paint-purple: var(--paint-purple);
+  --color-paint-orange: var(--paint-orange);
+  --color-paint-green: var(--paint-green);
+
+  --font-display: "Baloo 2", "Comic Sans MS", system-ui, sans-serif;
+  --font-body: "Nunito", system-ui, sans-serif;
+
+  --shadow-chunky: 0 6px 0 0 var(--primary-shadow);
+  --shadow-chunky-secondary: 0 6px 0 0 var(--secondary-shadow);
+  --shadow-chunky-accent: 0 6px 0 0 var(--accent-shadow);
+  --shadow-card-pop: 0 8px 0 0 oklch(0.9 0.02 220), 0 12px 24px -8px oklch(0.4 0.05 240 / 0.18);
+}
+
+:root {
+  --radius: 1.1rem;
+
+  /* Warm cream paper background */
+  --background: oklch(0.985 0.012 95);
+  --foreground: oklch(0.24 0.04 260);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.24 0.04 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.24 0.04 260);
+
+  /* Vivid Duolingo green */
+  --primary: oklch(0.78 0.21 142);
+  --primary-foreground: oklch(0.99 0 0);
+  --primary-shadow: oklch(0.62 0.21 142);
+
+  /* Sunny yellow secondary */
+  --secondary: oklch(0.9 0.17 95);
+  --secondary-foreground: oklch(0.28 0.08 60);
+  --secondary-shadow: oklch(0.74 0.17 80);
+
+  /* Bubblegum pink accent */
+  --accent: oklch(0.78 0.18 18);
+  --accent-foreground: oklch(0.99 0 0);
+  --accent-shadow: oklch(0.62 0.2 22);
+
+  --muted: oklch(0.96 0.015 95);
+  --muted-foreground: oklch(0.48 0.03 260);
+
+  --destructive: oklch(0.65 0.24 27);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.9 0.02 95);
+  --input: oklch(0.92 0.02 95);
+  --ring: oklch(0.78 0.21 142);
+
+  /* Themed scene colors */
+  --sky: oklch(0.92 0.06 230);
+  --grass: oklch(0.82 0.16 145);
+  --sunshine: oklch(0.92 0.16 95);
+  --bubble: oklch(0.84 0.13 340);
+  --water: oklch(0.78 0.13 235);
+
+  /* Paint palette (high chroma) */
+  --paint-red: oklch(0.66 0.24 27);
+  --paint-blue: oklch(0.6 0.21 250);
+  --paint-yellow: oklch(0.9 0.18 95);
+  --paint-purple: oklch(0.52 0.22 305);
+  --paint-orange: oklch(0.75 0.2 50);
+  --paint-green: oklch(0.72 0.2 145);
+
+  --chart-1: var(--paint-red);
+  --chart-2: var(--paint-blue);
+  --chart-3: var(--paint-yellow);
+  --chart-4: var(--paint-purple);
+  --chart-5: var(--paint-orange);
+
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+.dark {
+  --background: oklch(0.2 0.03 260);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.26 0.03 260);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.26 0.03 260);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.78 0.21 142);
+  --primary-foreground: oklch(0.15 0 0);
+  --primary-shadow: oklch(0.5 0.18 142);
+  --secondary: oklch(0.85 0.16 95);
+  --secondary-foreground: oklch(0.2 0 0);
+  --secondary-shadow: oklch(0.62 0.16 80);
+  --accent: oklch(0.78 0.18 18);
+  --accent-foreground: oklch(0.15 0 0);
+  --accent-shadow: oklch(0.55 0.18 22);
+  --muted: oklch(0.3 0.03 260);
+  --muted-foreground: oklch(0.75 0.02 260);
+  --destructive: oklch(0.7 0.22 27);
+  --destructive-foreground: oklch(0.15 0 0);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.78 0.21 142);
+}
+
+@font-face {
+  font-family: "Baloo 2";
+  font-style: normal;
+  font-display: swap;
+  src: local("Baloo 2"), local("Comic Sans MS");
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  .btn-chunky {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-extrabold uppercase tracking-wide text-base select-none cursor-pointer transition-all duration-100;
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+    box-shadow: 0 6px 0 0 var(--color-primary-shadow);
+    border: 2px solid var(--color-primary-shadow);
+    transform: translateY(0);
+  }
+  .btn-chunky:hover { filter: brightness(1.05); }
+  .btn-chunky:active { transform: translateY(4px); box-shadow: 0 2px 0 0 var(--color-primary-shadow); }
+  .btn-chunky:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .btn-chunky-secondary {
+    background-color: var(--color-secondary);
+    color: var(--color-secondary-foreground);
+    box-shadow: 0 6px 0 0 var(--color-secondary-shadow);
+    border-color: var(--color-secondary-shadow);
+  }
+  .btn-chunky-secondary:active { box-shadow: 0 2px 0 0 var(--color-secondary-shadow); }
+
+  .btn-chunky-accent {
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+    box-shadow: 0 6px 0 0 var(--color-accent-shadow);
+    border-color: var(--color-accent-shadow);
+  }
+  .btn-chunky-accent:active { box-shadow: 0 2px 0 0 var(--color-accent-shadow); }
+
+  .btn-chunky-ghost {
+    background-color: var(--color-card);
+    color: var(--color-foreground);
+    box-shadow: 0 6px 0 0 var(--color-border);
+    border-color: var(--color-border);
+  }
+  .btn-chunky-ghost:active { box-shadow: 0 2px 0 0 var(--color-border); }
+
+  .card-pop {
+    background-color: var(--color-card);
+    border-radius: 1.75rem;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-card-pop);
+  }
+
+  .stripes-bg {
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        oklch(0.97 0.02 95) 0 20px,
+        oklch(0.94 0.02 95) 20px 40px
+      );
+  }
+
+  .wobble {
+    animation: wobble 1.2s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  @keyframes wobble {
+    0%, 100% { transform: rotate(-2deg); }
+    50%      { transform: rotate(2deg); }
+  }
+
+  .pop-in {
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes popIn {
+    0%   { opacity: 0; transform: scale(0.6); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .float {
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+
+  .confetti-burst {
+    animation: confetti 0.9s ease-out forwards;
+  }
+  @keyframes confetti {
+    0% { transform: scale(0) rotate(0deg); opacity: 1; }
+    100% { transform: scale(1.4) rotate(360deg) translateY(-200px); opacity: 0; }
+  }
+}
+
+/* Use display font on shadcn cards we re-skin */
+.kinetic-display { font-family: var(--font-display); font-weight: 800; }
