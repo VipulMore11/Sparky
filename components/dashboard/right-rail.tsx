@@ -3,7 +3,7 @@
 import { Flame, Gem, Heart, Lock, Zap, Trophy } from "lucide-react"
 import { useProfile } from "@/lib/use-profile"
 import { LEARNING_STYLES } from "@/lib/learning-styles"
-import { TOTAL_STAGES } from "@/lib/stages"
+import { TOTAL_STAGES, getStages } from "@/lib/stages"
 
 export function TopStats() {
   const { profile } = useProfile()
@@ -99,7 +99,7 @@ export function RightRail() {
             <div>
               <p className="font-bold">{LEARNING_STYLES[primary].name}</p>
               <p className="text-xs text-muted-foreground">
-                {done}/{TOTAL_STAGES} stages done
+                {done}/{getStages(primary).length} stages done
               </p>
             </div>
           </div>

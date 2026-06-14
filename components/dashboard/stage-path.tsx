@@ -37,6 +37,10 @@ export function StagePath({ style }: { style: StyleKey }) {
     null,
   )
 
+  const [activeLessonIndex, setActiveLessonIndex] = useState<number | null>(null)
+
+  const [showGuide, setShowGuide] = useState(false)
+
   function status(index: number): "done" | "active" | "locked" {
     if (index < completed) return "done"
     if (index === completed) return "active"
@@ -51,6 +55,30 @@ export function StagePath({ style }: { style: StyleKey }) {
       })
     }
     setOpenStage(null)
+  }
+
+  const handleStartStage = (index: number) => {
+    if (style === "auditory") {
+      setActiveLessonIndex(index)
+      setOpenStage(null)
+    } else {
+      completeStage(index)
+    }
+  }
+
+  if (activeLessonIndex !== null && style === "auditory") {
+    // Dynamically import to avoid circular dependencies if any
+    const { AuditoryLearningLesson } = require("@/components/auditory/AuditoryApp")
+    return (
+      <AuditoryLearningLesson
+        levelIndex={activeLessonIndex}
+        onComplete={(score: number) => {
+          if (activeLessonIndex === completed) completeStage(activeLessonIndex)
+          setActiveLessonIndex(null)
+        }}
+        onClose={() => setActiveLessonIndex(null)}
+      />
+    )
   }
 
   const points = stages.map((stage, i) => {
@@ -76,7 +104,8 @@ export function StagePath({ style }: { style: StyleKey }) {
     <div className="flex flex-col items-center">
       {/* unit banner */}
       <div
-        className="flex w-full max-w-xl items-center justify-between rounded-2xl border-b-4 px-5 py-4"
+        className="flex w-full max-w-xl items-center justify-between rounded-2xl border-b-4 px-5 py-4 cursor-pointer hover:opacity-90 transition-opacity"
+        onClick={() => setShowGuide(true)}
         style={{
           background: meta.colorVar,
           borderColor: "color-mix(in oklab, black 25%, transparent)",
@@ -90,10 +119,10 @@ export function StagePath({ style }: { style: StyleKey }) {
           <h2 className="text-lg font-extrabold">{section.unit}</h2>
           <p className="text-xs font-semibold opacity-90">{section.subtitle}</p>
         </div>
-        <span className="flex items-center gap-1.5 rounded-xl bg-black/20 px-3 py-2 text-xs font-extrabold">
+        <button className="flex items-center gap-1.5 rounded-xl bg-black/20 px-3 py-2 text-xs font-extrabold hover:bg-black/30 transition-colors">
           <BookText className="h-4 w-4" />
           GUIDE
-        </span>
+        </button>
       </div>
 
       {/* winding node path */}
@@ -227,17 +256,74 @@ export function StagePath({ style }: { style: StyleKey }) {
             <div className="mt-4 flex items-start gap-3">
               <Mascot size={64} animate={false} />
               <SpeechBubble tail="left" className="text-sm">
-                This stage is a placeholder for now — soon it&apos;ll have a fun{" "}
-                {meta.shortName.toLowerCase()}-style activity!
+                {style === "auditory"
+                  ? "Ready for a listening challenge?"
+                  : `This stage is a placeholder for now — soon it'll have a fun ${meta.shortName.toLowerCase()}-style activity!`}
               </SpeechBubble>
             </div>
 
             <button
               type="button"
-              onClick={() => completeStage(openStage.index)}
+              onClick={() => handleStartStage(openStage.index)}
               className="mt-5 w-full rounded-2xl border-b-4 border-primary/40 bg-primary py-3 text-base font-extrabold tracking-wide text-primary-foreground transition-all active:translate-y-0.5 active:border-b-2"
             >
-              {openStage.index < completed ? "REVIEW (+0)" : "COMPLETE (+10 Sparks)"}
+              {openStage.index < completed ? "REVIEW (+0)" : (style === "auditory" ? "START LESSON" : "COMPLETE (+10 Sparks)")}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Guide dialog */}
+      {showGuide && (
+        <div
+          className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 p-4"
+          onClick={() => setShowGuide(false)}
+        >
+          <div
+            className="w-full max-w-lg rounded-3xl border-2 border-border bg-card p-6 shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-start mb-6">
+              <h2 className="text-2xl font-extrabold" style={{ color: meta.colorVar }}>
+                {meta.name} Guide
+              </h2>
+              <button
+                onClick={() => setShowGuide(false)}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            
+            <div className="space-y-4 text-sm">
+              <p>
+                <strong>Welcome to the Auditory path!</strong>
+              </p>
+              <p>
+                If you are an auditory learner, you learn best through listening and speaking. You might notice that you:
+              </p>
+              <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                <li>Remember what people say better than what they look like.</li>
+                <li>Like to talk things through or read out loud to understand them.</li>
+                <li>Follow spoken directions well.</li>
+                <li>Enjoy music, rhythms, and patterns in sound.</li>
+              </ul>
+              
+              <div className="mt-6 p-4 rounded-xl bg-muted border border-border">
+                <h4 className="font-bold mb-2 flex items-center gap-2">
+                  <Mascot size={32} /> Tips for this Path
+                </h4>
+                <p className="text-muted-foreground leading-relaxed">
+                  Make sure your sound is on! You will be asked to listen to prompts, match sounds, and even repeat phrases into your microphone to practice. Don't be afraid to speak up—your voice is the best tool for learning here!
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowGuide(false)}
+              className="mt-8 w-full rounded-2xl border-b-4 border-primary/40 bg-primary py-3 text-base font-extrabold text-primary-foreground active:translate-y-0.5 active:border-b-2"
+            >
+              GOT IT
             </button>
           </div>
         </div>
