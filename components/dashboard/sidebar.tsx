@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Sparkles, Star, Gamepad2 } from "lucide-react"
+import { Sparkles, Star, Gamepad2, PieChart, RotateCcw } from "lucide-react"
 import {
   LEARNING_STYLES,
   STYLE_ORDER,
@@ -88,18 +88,24 @@ export function Sidebar({ active }: SidebarProps) {
         </Link>
       </nav>
 
-      <div className="mt-auto px-3 pt-4">
+      <div className="mt-auto flex flex-col gap-1">
         <Link
           href="/results"
-          className="block text-sm font-bold text-muted-foreground transition-colors hover:text-foreground"
+          className="flex items-center gap-3 rounded-xl border-2 border-transparent px-3 py-2.5 text-sm font-extrabold uppercase tracking-wide text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground"
         >
-          View my results
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+            <PieChart className="h-4 w-4" />
+          </span>
+          <span className="flex-1">Results</span>
         </Link>
         <Link
           href="/"
-          className="mt-2 block text-sm font-bold text-muted-foreground transition-colors hover:text-foreground"
+          className="flex items-center gap-3 rounded-xl border-2 border-transparent px-3 py-2.5 text-sm font-extrabold uppercase tracking-wide text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground"
         >
-          Retake assessment
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+            <RotateCcw className="h-4 w-4" />
+          </span>
+          <span className="flex-1">Retake</span>
         </Link>
       </div>
     </aside>
