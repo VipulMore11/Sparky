@@ -17,6 +17,7 @@ import { LEARNING_STYLES, type StyleKey } from "@/lib/learning-styles"
 import { getStages, MODULE_SECTIONS, type Stage, type StageKind } from "@/lib/stages"
 import { cn } from "@/lib/utils"
 import { RWLessonPlayer } from "./rw-lesson-player"
+import { AuditoryLearningLesson } from "../auditory/AuditoryApp"
 
 const KIND_ICON: Record<StageKind, typeof Star> = {
   lesson: Star,
@@ -38,6 +39,7 @@ export function StagePath({ style }: { style: StyleKey }) {
     null,
   )
   const [activeRWLesson, setActiveRWLesson] = useState<string | null>(null)
+  const [activeAuditoryLesson, setActiveAuditoryLesson] = useState<number | null>(null)
 
   function status(index: number): "done" | "active" | "locked" {
     if (index < completed) return "done"
@@ -149,6 +151,8 @@ export function StagePath({ style }: { style: StyleKey }) {
                     if (st !== "locked") {
                       if (style === "readwrite" && stage.kind === "lesson") {
                         setActiveRWLesson(stage.id)
+                      } else if (style === "auditory") {
+                        setActiveAuditoryLesson(i)
                       } else {
                         setOpenStage({ stage, index: i })
                       }
@@ -268,6 +272,23 @@ export function StagePath({ style }: { style: StyleKey }) {
               })
             }
             setActiveRWLesson(null)
+          }}
+        />
+      )}
+
+      {/* interactive auditory player overlay */}
+      {activeAuditoryLesson !== null && style === "auditory" && (
+        <AuditoryLearningLesson
+          levelIndex={activeAuditoryLesson}
+          onClose={() => setActiveAuditoryLesson(null)}
+          onComplete={(score) => {
+            if (activeAuditoryLesson === completed) {
+              update({
+                progress: { ...profile.progress, [style]: completed + 1 },
+                sparks: profile.sparks + 10,
+              })
+            }
+            setActiveAuditoryLesson(null)
           }}
         />
       )}

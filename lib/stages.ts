@@ -57,7 +57,17 @@ export const MODULE_SECTIONS: Record<
 
 export function getStages(style: StyleKey): Stage[] {
   if (style === "readwrite") return RW_STAGES
+  if (style === "auditory") {
+    return Array.from({ length: 20 }).map((_, i) => {
+      const isChest = (i + 1) % 5 === 0
+      return {
+        id: `auditory-${i}`,
+        title: isChest ? `Block ${Math.floor(i / 5) + 1} Review` : `Lesson ${i + 1}`,
+        kind: isChest ? "chest" : "lesson",
+      }
+    })
+  }
   return BASE_STAGES
 }
 
-export const TOTAL_STAGES = Math.max(BASE_STAGES.length, RW_STAGES.length)
+export const TOTAL_STAGES = Math.max(BASE_STAGES.length, RW_STAGES.length, 20)
