@@ -21,6 +21,14 @@ const BASE_STAGES: Stage[] = [
   { id: "s6", title: "Style Champion", kind: "trophy" },
 ]
 
+const RW_STAGES: Stage[] = [
+  { id: "rw-l1", title: "Reading Challenge", kind: "lesson" },
+  { id: "rw-l2", title: "Writing Practice", kind: "lesson" },
+  { id: "rw-l3", title: "Logic Check", kind: "lesson" },
+  { id: "rw-chest", title: "Treasure Stop", kind: "chest" },
+  { id: "rw-trophy", title: "Style Champion", kind: "trophy" },
+]
+
 export const MODULE_SECTIONS: Record<
   StyleKey,
   { section: string; unit: string; subtitle: string }
@@ -47,8 +55,9 @@ export const MODULE_SECTIONS: Record<
   },
 }
 
-export function getStages(_style: StyleKey): Stage[] {
+export function getStages(style: StyleKey): Stage[] {
+  if (style === "readwrite") return RW_STAGES
   return BASE_STAGES
 }
 
-export const TOTAL_STAGES = BASE_STAGES.length
+export const TOTAL_STAGES = Math.max(BASE_STAGES.length, RW_STAGES.length)

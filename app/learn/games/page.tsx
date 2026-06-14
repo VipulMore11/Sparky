@@ -250,11 +250,12 @@ export default function GamesPage() {
                           <h4 className="mb-1 text-xs font-bold uppercase tracking-widest text-muted-foreground">Why play this?</h4>
                           <p className="text-sm font-semibold text-foreground">{game.concept}</p>
                         </div>
-                        <Button asChild className="h-14 w-full rounded-2xl border-b-4 bg-primary text-lg font-extrabold uppercase tracking-wide text-primary-foreground transition-all active:translate-y-1 active:border-b-0">
-                          <Link href={game.href}>
-                            Play Now!
-                          </Link>
-                        </Button>
+                        <Link 
+                          href={game.href}
+                          className="flex items-center justify-center h-14 w-full rounded-2xl border-b-4 bg-primary text-lg font-extrabold uppercase tracking-wide text-primary-foreground transition-all hover:bg-primary/90 active:translate-y-1 active:border-b-0"
+                        >
+                          Play Now!
+                        </Link>
                       </CardContent>
                     </Card>
                   ))}

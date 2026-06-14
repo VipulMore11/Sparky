@@ -16,6 +16,7 @@ import { useProfile } from "@/lib/use-profile"
 import { LEARNING_STYLES, type StyleKey } from "@/lib/learning-styles"
 import { getStages, MODULE_SECTIONS, type Stage, type StageKind } from "@/lib/stages"
 import { cn } from "@/lib/utils"
+import { RWLessonPlayer } from "./rw-lesson-player"
 
 const KIND_ICON: Record<StageKind, typeof Star> = {
   lesson: Star,
@@ -36,6 +37,7 @@ export function StagePath({ style }: { style: StyleKey }) {
   const [openStage, setOpenStage] = useState<{ stage: Stage; index: number } | null>(
     null,
   )
+  const [activeRWLesson, setActiveRWLesson] = useState<string | null>(null)
 
   function status(index: number): "done" | "active" | "locked" {
     if (index < completed) return "done"
@@ -143,7 +145,15 @@ export function StagePath({ style }: { style: StyleKey }) {
                 )}
                 <button
                   type="button"
-                  onClick={() => st !== "locked" && setOpenStage({ stage, index: i })}
+                  onClick={() => {
+                    if (st !== "locked") {
+                      if (style === "readwrite" && stage.kind === "lesson") {
+                        setActiveRWLesson(stage.id)
+                      } else {
+                        setOpenStage({ stage, index: i })
+                      }
+                    }
+                  }}
                   disabled={st === "locked"}
                   aria-label={`${stage.title} — ${st}`}
                   className={cn(
@@ -241,6 +251,25 @@ export function StagePath({ style }: { style: StyleKey }) {
             </button>
           </div>
         </div>
+      )}
+
+      {/* interactive read/write player overlay */}
+      {activeRWLesson && (
+        <RWLessonPlayer
+          lessonId={activeRWLesson}
+          age={profile.ageGroup}
+          onExit={() => setActiveRWLesson(null)}
+          onComplete={(xpEarned) => {
+            const activeIndex = stages.findIndex(s => s.id === activeRWLesson)
+            if (activeIndex === completed) {
+              update({
+                progress: { ...profile.progress, [style]: completed + 1 },
+                sparks: profile.sparks + xpEarned,
+              })
+            }
+            setActiveRWLesson(null)
+          }}
+        />
       )}
     </div>
   )
