@@ -2,9 +2,9 @@
 
 <img src="public/icon.svg" alt="SparkPath Logo" width="80" height="80" />
 
-# ⚡ SparkPath
+# ⚡ Sparky
 
-### *Discover how YOU learn STEM best — then explore the perfect tools to do it.*
+### *Helping every child learn in the way that works best for them.*
 
 A **Duolingo-inspired**, mascot-guided STEM learning platform that identifies each child's unique learning style through a multimodal VARK assessment, then delivers a fully personalized learning path, brain games, and AI-powered tutoring — all with **no account or login required**.
 
@@ -21,50 +21,157 @@ A **Duolingo-inspired**, mascot-guided STEM learning platform that identifies ea
 
 ## 📋 Table of Contents
 
-- [Project Overview](#-project-overview)
-- [Key Features](#-key-features)
-- [How the Assessment System Works](#-how-the-assessment-system-works)
-- [Tech Stack & Dependencies](#-tech-stack--dependencies)
-- [Prerequisites & Installation](#-prerequisites--installation)
-- [Usage Examples](#-usage-examples)
-- [API Documentation](#-api-documentation)
-- [Project Structure](#-project-structure)
-- [UI Screenshots](#-ui-screenshots)
-- [Contribution Guide](#-contribution-guide)
-- [License](#-license)
+- [💡 Inspiration](#-inspiration)
+- [🌟 What It Does](#-what-it-does)
+- [🛠️ How We Built It](#️-how-we-built-it)
+- [⚠️ Challenges We Ran Into](#️-challenges-we-ran-into)
+- [🏆 Accomplishments We're Proud Of](#-accomplishments-were-proud-of)
+- [📚 What We Learned](#-what-we-learned)
+- [🔮 What's Next for Sparky](#-whats-next-for-sparky)
+- [✨ Key Features](#-key-features)
+- [🔄 How the Assessment System Works](#-how-the-assessment-system-works)
+- [🛠 Tech Stack & Dependencies](#-tech-stack--dependencies)
+- [📦 Prerequisites & Installation](#-prerequisites--installation)
+- [💻 Usage Examples](#-usage-examples)
+- [📡 API Documentation](#-api-documentation)
+- [📁 Project Structure](#-project-structure)
+- [📸 UI Screenshots](#-ui-screenshots)
+- [🤝 Contribution Guide](#-contribution-guide)
+- [📄 License](#-license)
 
 ---
 
-## 🌟 Project Overview
+## 💡 Inspiration
 
-**SparkPath** is a privacy-first, child-safe STEM learning web application for ages **3–18**. Guided by **Sparky**, a cheerful animated mascot, children go through a fun onboarding adventure, complete a multimodal VARK-style quiz, and receive a fully personalized learning profile — all stored locally on the device, no account required.
+Growing up, I was often scolded for poor academic performance. Over time, I started believing that I simply wasn't smart enough. It's easy to feel that way when other children receive praise while you're met with disappointment.
 
-The platform then routes each child into one of four *Learner Modules* (Visual, Auditory, Read/Write, Kinesthetic) and offers:
+The frustration grew because I was genuinely trying hard, yet classmates who barely seemed to study often performed better than I did. Fortunately, I discovered something that changed everything. Following the traditional advice of repeatedly writing and practicing never worked for me — it only made learning more frustrating.
 
-- Duolingo-style stage progression within their primary learning style
-- A rich **Brain Games** arcade covering cognitive, social-emotional, decision-making, and perception categories
-- An **AI chat guide** (Sparky) powered by GPT, tuned specifically for child-safe STEM learning tool recommendations
+Later, I started **speaking aloud what I was studying**, and suddenly everything clicked.
+
+This realization made me question whether I was ever bad at learning in the first place. Maybe I simply wasn't being taught in a way that matched how I learned best. More insights emerged when I started helping my younger sister with her studies.
+
+Whenever I explained concepts to her, she understood them almost instantly. However, when my mother taught her using traditional repetitive writing methods, they often struggled for hours without much progress.
+
+That experience inspired a simple but powerful question:
+
+> **What if we could help children discover how they learn best — and help parents understand how to teach them more effectively?**
+
+That's how **Sparky** was born.
+
+---
+
+## 🌟 What It Does
+
+**Sparky** is an **AI-powered learning platform** designed for children in their early developmental years and their parents.
+
+The platform begins with an **age-based gamified onboarding experience** and introduces children to interactive STEM activities, educational games, audio and video learning modules, and cognitive assessments. Through these experiences, Sparky analyzes engagement patterns, learning preferences, cognitive strengths, and retention behaviors to generate **personalized learning reports** and **adaptive learning plans**.
+
+Instead of forcing every child into the same learning framework, Sparky helps identify which learning approaches work best for each child, how different methods can be combined effectively, and ways to maximize retention and learning outcomes.
+
+### For Children
+- Complete a fun, mascot-guided VARK assessment to discover their primary learning style
+- Follow a Duolingo-style personalized stage path built around how *they* learn
+- Play 12+ research-valid brain games spanning cognitive, social-emotional, and decision-making categories
+- Chat with **Sparky**, an AI guide who recommends real tools and study techniques tailored to their style and age
+
+### For Parents
+Sparky provides actionable recommendations that help parents adapt their teaching style, incorporate multimodal learning techniques, create engaging learning environments at home, and support their child's unique learning needs.
+
+### Our Goal
+- ✅ **Increase academic engagement**
+- ✅ **Build learning confidence**
+- ✅ **Improve retention**
+- ✅ **Reduce academic frustration**
+- ✅ **Strengthen parent-child learning experiences**
+
+---
+
+## 🛠️ How We Built It
+
+We built **Sparky** as a modern AI-powered web platform focused on helping children discover how they learn best while providing parents with meaningful insights.
+
+### Frontend & Platform
+Built with **Next.js**, **React**, **Tailwind CSS**, **shadcn/ui**, **Base UI**, and **Framer Motion** to create a fast, responsive, accessible, and child-friendly experience across all devices.
+
+### Learning Experiences
+We designed four interactive learner modules tailored around different learning approaches — **Visual**, **Auditory**, **Kinesthetic**, and **Read/Write** — where children engage through gamified STEM challenges, educational mini-games, interactive assessments, and audio/video learning activities.
+
+### AI-Powered Features
+To support auditory learners, we built an **AI Dialogue System** that enables children to listen actively, think critically, and respond conversationally. We integrated **Text-to-Speech (TTS)**, **Speech Recognition**, **AI Chat Assistance**, and the **Vercel AI SDK** to power intelligent conversations, personalized feedback, and adaptive learning.
+
+### Analytics & Reporting
+We developed progress tracking systems, learning analytics dashboards, and engagement visualizations to help both children and parents understand learning patterns and growth over time. Sparky generates customized reports containing learning insights, study recommendations, preferred learning techniques, and parent teaching recommendations.
+
+---
+
+## ⚠️ Challenges We Ran Into
+
+**Making Learning Fun** — Our biggest challenge was ensuring the platform felt genuinely enjoyable rather than becoming "just another educational website." We invested significant effort into gamification systems, interactive activities, reward mechanisms, mini-games, and micro-animations while still collecting meaningful educational data.
+
+**Tracking Learning Behaviors** — Because Sparky evaluates engagement patterns, learning preferences, and cognitive behaviors, we needed a reliable system to track interactions across multiple learning experiences without disrupting the user experience.
+
+**Generating Actionable Insights** — Combining data from STEM challenges, audio modules, video content, assessments, and educational games into a single, easy-to-understand report for both children and parents proved to be one of the most complex challenges we faced.
+
+---
+
+## 🏆 Accomplishments We're Proud Of
+
+One of our proudest achievements is seeing Sparky evolve from a personal childhood experience into a **fully interactive learning ecosystem**.
+
+- ✅ Building a complete end-to-end learning platform
+- ✅ Combining **AI-powered personalization** with **gamified learning**
+- ✅ Creating personalized reports for both children and parents
+- ✅ Supporting multiple age groups (ages 3–18) with age-appropriate experiences
+- ✅ Successfully integrating Visual, Auditory, Kinesthetic, and Read/Write learning into a single cohesive platform
+
+Most importantly, we're proud that Sparky has the potential to help children build confidence, reduce learning frustration, help parents better understand their children, and create healthier learning experiences at home.
+
+---
+
+## 📚 What We Learned
+
+From a technical perspective, we discovered that building for children is fundamentally different from building traditional web applications. Simply displaying content wasn't enough.
+
+We experimented extensively with animation libraries, gamification techniques, interactive UI components, AI conversations, speech technologies, and progress tracking systems until the experience felt engaging and natural.
+
+> **Creating a great educational experience requires balancing technology, psychology, design, and learning science — not just writing code.**
+
+---
+
+## 🔮 What's Next for Sparky
+
+Our next goal is to go much deeper into understanding how children learn and how different learning approaches can be combined to maximize engagement, retention, and outcomes.
+
+### Enhanced Assessments
+Rather than only identifying learning preferences, we want to build advanced assessments capable of discovering the **most effective combinations** of Visual, Auditory, Kinesthetic, and Read/Write learning for every individual child — with deeper behavioral insights, more actionable recommendations, continuously evolving learning plans, and long-term progress tracking.
+
+### Parent Learning Module
+We plan to develop a dedicated **Parent STEM Learning Module** with teaching guides, hands-on home experiments, interactive activities, age-appropriate strategies, and at-home learning resources — making STEM subjects more accessible and enjoyable for the whole family.
+
+### Long-Term Vision
+Our vision is for **Sparky** to become a comprehensive learning companion for both children and parents — helping families discover how children learn best, build confidence, and transform learning from a source of frustration into a source of curiosity and growth.
 
 ---
 
 ## ✨ Key Features
 
-- 🎯 **VARK-Based Learning Style Detection** — 8-question multimodal assessment (visual, audio, text modalities) scientifically maps children to one of four styles: Visual, Auditory, Read/Write, or Kinesthetic
-- 🧭 **Guided Mascot Onboarding** — 7-step animated onboarding flow with video, embedded quiz, age selection, and name capture; no sign-up required
+- 🎯 **VARK-Based Learning Style Detection** — 8-question multimodal assessment (visual, audio, text modalities) maps children to one of four styles: Visual, Auditory, Read/Write, or Kinesthetic
+- 🧭 **Guided Mascot Onboarding** — 7-step animated onboarding flow with STEM video, embedded quiz, age selection, and name capture; no sign-up required
 - 🗺️ **Personalized Stage Path** — Duolingo-style winding lesson map, unique per learning style, with lesson, chest, practice, and trophy stage types
 - 🧠 **Rich Learner Modules** — Four fully distinct modules with age-adaptive STEM content for Early (3–5), Elementary (6–8), Middle (9–12), and Teen (13–18) groups
 - 🎮 **Sparky's Brain Games Arcade** — 12 research-valid mini-games across 6 categories: Brain Teasers, Lightning Reflexes, Decision-Making, Pattern Learning, Social-Emotional, and Consumer Behavior
 - 🤖 **AI Chat with Sparky** — A streaming AI assistant (Vercel AI SDK + GPT) that recommends learning tools and techniques tailored to each child's style and age group
 - 📊 **Style Results Dashboard** — Animated breakdown of learning-style mix (percentages), curated tool recommendations, and personalized study tips
 - 🔥 **XP & Progress Tracking** — Sparks (XP), streak counters, hearts, and daily quests — all persisted in `localStorage`, zero backend
-- 🔒 **Privacy-First by Design** — No accounts, no tracking, no ads; all data stays on device
+- 🔒 **Privacy-First by Design** — No accounts, no tracking, no ads; all data stays on the child's device
 - 📱 **Fully Responsive** — Mobile-first layout with a desktop sidebar, mobile top nav, and adaptive content
 
 ---
 
 ## 🔄 How the Assessment System Works
 
-The assessment is the core engine of SparkPath. It determines the child's **primary learning style** and drives all downstream personalization. Here is the complete flow from the moment a child lands on the site through to their personalized results:
+The assessment is the core engine of SparkPath. It determines the child's **primary learning style** and drives all downstream personalization — routing, content, tool recommendations, and AI chat context.
 
 ### Complete Assessment Flow Diagram
 
@@ -74,15 +181,15 @@ flowchart TD
     B -- Yes, assessment done --> C([🗺️ /learn — Personalized Dashboard])
     B -- No --> D[📺 Onboarding: Intro with Sparky]
 
-    subgraph ONBOARDING ["🧭 Onboarding Flow (7 Steps)"]
+    subgraph ONBOARDING ["🧭 Onboarding Flow — 7 Steps"]
         D --> E[Mission: Everyone learns differently!]
         E --> F[STEM Video Embed — SciShow Kids]
         F --> G[Video Quiz — What do engineers do?]
         G --> H{Correct Answer?}
         H -- ✅ Correct --> I[🎉 Celebration Message]
-        H -- ❌ Wrong --> J[🌟 Encouragement Message]
+        H -- ❌ Wrong --> J[🌟 Encouragement — Keep trying!]
         I & J --> K[Age Group Selection\nEarly · Elementary · Middle · Teen]
-        K --> L[Name Input — Stored Locally]
+        K --> L[Name Input — Stored Locally Only]
         L --> M[Ready Screen — START QUEST]
     end
 
@@ -90,28 +197,28 @@ flowchart TD
 
     subgraph ASSESSMENT ["📋 VARK Assessment Engine"]
         N --> Q1[Q1 Visual — Science Kit Scenario]
-        Q1 --> Q2[Q2 Audio — TTS Spoken Question\nMemory Technique]
+        Q1 --> Q2[Q2 Audio — TTS Spoken\nMemory Technique Question]
         Q2 --> Q3[Q3 Text — Circuit Reading Task]
         Q3 --> Q4[Q4 Visual — Learning Format Preference]
         Q4 --> Q5[Q5 Audio — TTS Math Problem Style]
         Q5 --> Q6[Q6 Text — Struggling Learner Aid]
         Q6 --> Q7[Q7 Visual — Project Showcase Format]
         Q7 --> Q8[Q8 Audio — TTS End-of-Day Learning]
-        Q8 --> SCORE[scoreAssessment — Tally each answer's StyleKey]
+        Q8 --> SCORE[scoreAssessment\nTally each answer's StyleKey]
     end
 
     subgraph SCORING ["📊 Score Calculation"]
         SCORE --> S1[Count answers per style\nvisual · auditory · readwrite · kinesthetic]
         S1 --> S2[Calculate percentages\nstyle_count ÷ total × 100]
         S2 --> S3[Rank styles strongest → weakest]
-        S3 --> S4[primary = ranked 0\nSave to localStorage Profile]
+        S3 --> S4[primary = ranked 0\nSave full result to localStorage Profile]
     end
 
     S4 --> R([🏆 /results — Personalized Results Page])
 
     subgraph RESULTS ["🎯 Results & Personalization"]
         R --> R1[Display Primary Learning Style Card\nVisual · Auditory · Read Write · Kinesthetic]
-        R1 --> R2[Show Learning Mix Bar Chart\nAll 4 styles with percentages]
+        R1 --> R2[Show Learning Mix Bar Chart\nAll 4 styles with animated percentages]
         R2 --> R3[Tool Recommendations Grid\nFiltered by style + age group]
         R3 --> R4[Study Tips Checklist\nTailored to primary style]
         R4 --> R5[CTA: GO TO MY LEARNING PATH →]
@@ -128,7 +235,7 @@ flowchart TD
         D2 --> D6[✋ Kinesthetic Module\nBuild · Color · Maze · Garden Games]
         D3 & D4 & D5 & D6 --> D7[Duolingo Stage Path\nLesson → Chest → Practice → Trophy]
         D7 --> D8[Right Rail\nDaily Quests · Leaderboard · Style Spotlight]
-        D8 --> D9[🤖 Ask Sparky — AI Chat Widget\nStreaming GPT · Style & Age Aware]
+        D8 --> D9[🤖 Ask Sparky — AI Chat Widget\nStreaming GPT · Style and Age Aware]
     end
 
     C --> GAMES([🎮 /learn/games — Brain Games Arcade])
@@ -149,17 +256,16 @@ flowchart TD
 
 Each of the 8 questions maps its 4 answer options to a `StyleKey`:
 
-| Option Label (example from Q1) | Maps to Style |
+| Example Option (Q1) | Maps to Style |
 |---|---|
 | "Watch the video showing how it works" | `visual` |
 | "Listen to someone explain it to me" | `auditory` |
 | "Read the instruction booklet" | `readwrite` |
 | "Just start building it with my hands" | `kinesthetic` |
 
-After all answers are collected, the `scoreAssessment()` function in [`lib/assessment.ts`](lib/assessment.ts) tallies scores:
+After all 8 answers are collected, the `scoreAssessment()` function in [`lib/assessment.ts`](lib/assessment.ts) tallies and ranks:
 
 ```typescript
-// Simplified scoring logic
 const scores = { visual: 0, auditory: 0, readwrite: 0, kinesthetic: 0 }
 for (const style of Object.values(answers)) {
   scores[style] += 1
@@ -171,17 +277,13 @@ const percentages = {
   readwrite:    Math.round((scores.readwrite / total) * 100),
   kinesthetic:  Math.round((scores.kinesthetic / total) * 100),
 }
-const ranked = Object.keys(scores).sort((a, b) => scores[b] - scores[a])
-// ranked[0] = primaryStyle
+const ranked = (Object.keys(scores) as StyleKey[]).sort((a, b) => scores[b] - scores[a])
+// ranked[0] === primaryStyle → drives all downstream content
 ```
-
-The result is persisted to `localStorage` under key `sparkpath_profile_v1` and drives all subsequent routing and content delivery.
-
----
 
 ### Question Modality Types
 
-SparkPath intentionally delivers each question in a **different sensory modality** so the assessment experience itself samples every learning channel:
+SparkPath delivers each question in a **different sensory modality** so the assessment itself samples every learning channel:
 
 | Modality | Label | How It Works |
 |---|---|---|
@@ -197,9 +299,9 @@ SparkPath intentionally delivers each question in a **different sensory modality
 
 | Package | Version | Role |
 |---|---|---|
-| `next` | 16.2.6 | App Router SSR + API Routes |
+| `next` | 16.2.6 | App Router, SSR, and API Routes |
 | `react` / `react-dom` | ^19 | UI rendering |
-| `typescript` | 5.7.3 | Type safety |
+| `typescript` | 5.7.3 | End-to-end type safety |
 
 ### AI & Streaming
 
@@ -212,9 +314,9 @@ SparkPath intentionally delivers each question in a **different sensory modality
 
 | Package | Version | Role |
 |---|---|---|
-| `tailwindcss` | ^4.2.0 | Utility-first CSS |
-| `shadcn` / `@base-ui/react` | latest | Accessible component primitives |
-| `framer-motion` / `motion` | ^12.40.0 | Page transitions & micro-animations |
+| `tailwindcss` | ^4.2.0 | Utility-first CSS framework |
+| `shadcn` / `@base-ui/react` | latest | Accessible headless component primitives |
+| `framer-motion` / `motion` | ^12.40.0 | Page transitions and micro-animations |
 | `lucide-react` | ^1.16.0 | Icon library |
 | `class-variance-authority` | ^0.7.1 | Component variant management |
 | `clsx` + `tailwind-merge` | latest | Conditional className composition |
@@ -224,9 +326,10 @@ SparkPath intentionally delivers each question in a **different sensory modality
 | Package | Role |
 |---|---|
 | `react-confetti` | Celebration animation on assessment completion |
-| `react-speech-recognition` | Voice input support in auditory module |
-| `recharts` | Progress & score charts |
+| `react-speech-recognition` | Voice input in auditory learning module |
+| `recharts` | Progress and score charts |
 | `@vercel/analytics` | Production usage analytics |
+| `regenerator-runtime` | Async/generator runtime support |
 
 ---
 
@@ -288,28 +391,23 @@ npm run start
 
 ## 💻 Usage Examples
 
-### Starting the Assessment Programmatically
-
-The assessment is driven by the `useProfile` hook and the `QUESTIONS` array:
+### Scoring the Assessment
 
 ```typescript
 import { QUESTIONS, scoreAssessment, type Answers } from "@/lib/assessment"
-import { useProfile } from "@/lib/use-profile"
 
-// Record a child's answer
 const answers: Answers = {}
-answers["q1"] = "visual"   // child chose visual option on Q1
-answers["q2"] = "auditory" // child chose auditory option on Q2
+answers["q1"] = "visual"
+answers["q2"] = "auditory"
 // ... 8 answers total
 
-// Score the assessment
 const result = scoreAssessment(answers)
 console.log(result.primary)      // "visual"
 console.log(result.percentages)  // { visual: 50, auditory: 25, readwrite: 13, kinesthetic: 13 }
 console.log(result.ranked)       // ["visual", "auditory", "readwrite", "kinesthetic"]
 ```
 
-### Accessing & Updating the Learner Profile
+### Reading & Updating the Learner Profile
 
 All profile state is managed through `useProfile()` — a custom hook backed by `localStorage`:
 
@@ -321,29 +419,26 @@ function MyComponent() {
 
   if (!ready) return <div>Loading...</div>
 
-  return (
-    <div>
-      <p>Name: {profile.name}</p>
-      <p>Primary style: {profile.primaryStyle}</p>
-      <p>Sparks earned: {profile.sparks}</p>
-      <p>Age group: {profile.ageGroup}</p>
-    </div>
-  )
+  // Read profile
+  console.log(profile.name)         // "Alex"
+  console.log(profile.primaryStyle) // "visual"
+  console.log(profile.sparks)       // 50
+  console.log(profile.ageGroup)     // "middle"
 
-  // Update after completing a stage
-  update({ sparks: profile.sparks + 10, progress: { ...profile.progress, visual: 3 } })
+  // Award XP after completing a stage
+  update({ sparks: profile.sparks + 10 })
 
-  // Reset everything (retake quiz)
+  // Reset all data (retake assessment)
   reset()
 }
 ```
 
-### Getting Tool Recommendations for a Style + Age
+### Getting Age-Matched Tool Recommendations
 
 ```typescript
 import { RECOMMENDATIONS } from "@/lib/learning-styles"
 
-// Get tools for a visual, middle-school learner
+// Tools for a visual, middle-school learner
 const tools = RECOMMENDATIONS["visual"]["middle"]
 // [
 //   { name: "PhET Simulations", what: "Interactive science visuals",
@@ -353,7 +448,7 @@ const tools = RECOMMENDATIONS["visual"]["middle"]
 // ]
 ```
 
-### Sending a Message to Sparky (AI Chat)
+### Sending a Message to the Sparky AI Chat
 
 ```typescript
 import { useChat } from "@ai-sdk/react"
@@ -367,7 +462,7 @@ const { messages, sendMessage, status } = useChat({
         messages,
         context: {
           name: "Alex",
-          style: "Visual Learner",  // passed to system prompt
+          style: "Visual Learner",
           ageGroup: "middle",
         },
       },
@@ -375,8 +470,8 @@ const { messages, sendMessage, status } = useChat({
   }),
 })
 
-// Send a message
 sendMessage({ text: "What apps are good for me?" })
+// Sparky streams back a warm, 2-4 sentence tool recommendation
 ```
 
 ---
@@ -387,8 +482,8 @@ sendMessage({ text: "What apps are good for me?" })
 
 Streams a child-safe AI response from Sparky, the SparkPath mascot guide.
 
-**Endpoint:** `POST /api/chat`
-**Max Duration:** 30 seconds (streaming)
+**Endpoint:** `POST /api/chat`  
+**Max Duration:** 30 seconds (streaming)  
 **Content-Type:** `application/json`
 
 #### Request Body
@@ -413,30 +508,29 @@ Streams a child-safe AI response from Sparky, the SparkPath mascot guide.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `messages` | `UIMessage[]` | ✅ | Full conversation history (Vercel AI SDK `UIMessage` format) |
-| `context.name` | `string` | ❌ | Child's first name or nickname (defaults to "the learner") |
-| `context.style` | `string` | ❌ | Primary learning style label (defaults to "mixed") |
-| `context.ageGroup` | `"early" \| "elementary" \| "middle" \| "teen"` | ❌ | Age group (defaults to "unknown") |
+| `context.name` | `string` | ❌ | Child's first name or nickname (defaults to `"the learner"`) |
+| `context.style` | `string` | ❌ | Primary learning style label (defaults to `"mixed"`) |
+| `context.ageGroup` | `"early" \| "elementary" \| "middle" \| "teen"` | ❌ | Age group (defaults to `"unknown"`) |
 
 #### Response
 
-Returns a **streaming UI message response** (Vercel AI SDK format — `text/event-stream`).
+Returns a **streaming UI message response** (`text/event-stream`). Each SSE event delivers incremental text chunks. The client-side `useChat` hook processes these automatically.
 
-Each SSE event delivers incremental text chunks. The client-side `useChat` hook processes these automatically.
-
-#### System Prompt Behavior
+#### System Prompt Rules
 
 Sparky is instructed to:
 - Guide on **HOW** to learn (tools, platforms, techniques) — never **WHAT** to study
 - Keep replies to 2–4 sentences, warm and playful
-- Use age-appropriate language (very simple for early/elementary)
+- Use age-appropriate language (very simple for `early`/`elementary`)
 - Never ask for personal information
 - Stay in character as Sparky at all times
+- No links; only name well-known platforms by name
 
 #### Example Response (streamed)
 
 ```
-"Hi Alex! For a visual learner like you, Khan Academy is amazing — 
-watch the colorful whiteboard videos and then try sketching what you saw. 
+"Hi Alex! For a visual learner like you, Khan Academy is amazing —
+watch the colorful whiteboard videos and then try sketching what you saw.
 PhET Simulations is also great for seeing science in action with sliders and graphs!"
 ```
 
@@ -459,13 +553,13 @@ stem-education-platform/
 │   ├── layout.tsx                # Root layout (fonts, metadata, analytics)
 │   ├── page.tsx                  # Home → OnboardingFlow
 │   ├── assessment/
-│   │   └── page.tsx              # Assessment route → AssessmentFlow
+│   │   └── page.tsx              # VARK assessment route → AssessmentFlow
 │   ├── results/
 │   │   └── page.tsx              # Results route → ResultsView
 │   ├── learn/
 │   │   ├── page.tsx              # Redirects to /learn/[primaryStyle]
 │   │   ├── [style]/
-│   │   │   └── page.tsx          # Learner module page (visual/auditory/rw/kinesthetic)
+│   │   │   └── page.tsx          # Learner module (visual/auditory/readwrite/kinesthetic)
 │   │   └── games/
 │   │       ├── page.tsx          # Brain Games arcade hub
 │   │       ├── cognitive/        # Stroop Sprint, Trail Tracker
@@ -473,7 +567,7 @@ stem-education-platform/
 │   │       ├── decision-making/  # Risk Run, Trust Trade
 │   │       ├── learning-pattern/ # Pattern Path, Symbol Switch
 │   │       ├── social-emotional/ # Empathy Echo, Mood Mirror
-│   │       └── consumer-behavior/ # Brand Battle, Impulse Cart
+│   │       └── consumer-behavior/# Brand Battle, Impulse Cart
 │   └── api/
 │       └── chat/
 │           └── route.ts          # Sparky AI streaming chat endpoint
@@ -491,54 +585,33 @@ stem-education-platform/
 │   │   ├── right-rail.tsx        # Daily quests, leaderboard, style spotlight
 │   │   ├── mascot-chat.tsx       # Floating AI chat widget (Sparky)
 │   │   ├── rw-lesson-player.tsx  # Read/Write lesson engine
-│   │   └── rw-step-views.tsx     # Individual step renderers (choice/fill/order/short)
+│   │   └── rw-step-views.tsx     # Step renderers (choice/fill/order/short)
 │   ├── visual/                   # Visual module interaction components
-│   │   ├── VisualApp.tsx
-│   │   ├── ImageChoice.tsx
-│   │   ├── LabelDiagram.tsx
-│   │   ├── MatchPairs.tsx
-│   │   ├── ReadChart.tsx
-│   │   ├── BuildPattern.tsx
-│   │   ├── SequenceImages.tsx
-│   │   ├── FillBlankWithVisual.tsx
-│   │   ├── SpotDifference.tsx
-│   │   └── BlockReport.tsx
+│   │   ├── VisualApp.tsx, ImageChoice.tsx, LabelDiagram.tsx
+│   │   ├── MatchPairs.tsx, ReadChart.tsx, BuildPattern.tsx
+│   │   ├── SequenceImages.tsx, FillBlankWithVisual.tsx
+│   │   ├── SpotDifference.tsx, BlockReport.tsx
 │   ├── auditory/                 # Auditory module interaction components
-│   │   ├── AuditoryApp.tsx
-│   │   ├── ListenAndChoose.tsx
-│   │   ├── ListenAndMatch.tsx
-│   │   ├── ListenAndSequence.tsx
-│   │   ├── Echo.tsx              # Repeat-after-me exercise
-│   │   ├── SpeakShortAnswer.tsx
-│   │   ├── RecordExplanation.tsx
-│   │   ├── DialogueDebate.tsx
+│   │   ├── AuditoryApp.tsx, ListenAndChoose.tsx, ListenAndMatch.tsx
+│   │   ├── ListenAndSequence.tsx, Echo.tsx, SpeakShortAnswer.tsx
+│   │   ├── RecordExplanation.tsx, DialogueDebate.tsx
 │   │   └── TypeWriteFallback.tsx
-│   ├── kinesthetic/              # Kinesthetic module games
-│   │   ├── KinestheticApp.tsx
-│   │   ├── ColorLab.tsx
-│   │   ├── BridgeBuilder.tsx
-│   │   ├── WaterPath.tsx
-│   │   ├── AnimalHouse.tsx
-│   │   ├── Garden.tsx
-│   │   ├── PuppyMaze.tsx
-│   │   ├── Playground.tsx
-│   │   ├── MiddleIceCream.tsx
-│   │   ├── MiddlePetRobot.tsx
-│   │   ├── MiddleTreehouse.tsx
-│   │   ├── MiddleWaterPark.tsx
-│   │   ├── TeenDreamRoom.tsx
-│   │   ├── TeenEscapeRoom.tsx
-│   │   ├── TeenFoodTruck.tsx
-│   │   ├── TeenThemePark.tsx
-│   │   ├── GameShell.tsx
-│   │   └── Results.tsx
+│   ├── kinesthetic/              # Kinesthetic module games (18 components)
+│   │   ├── KinestheticApp.tsx, ColorLab.tsx, BridgeBuilder.tsx
+│   │   ├── WaterPath.tsx, AnimalHouse.tsx, Garden.tsx
+│   │   ├── PuppyMaze.tsx, Playground.tsx, Results.tsx
+│   │   ├── MiddleIceCream.tsx, MiddlePetRobot.tsx
+│   │   ├── MiddleTreehouse.tsx, MiddleWaterPark.tsx
+│   │   └── TeenDreamRoom.tsx, TeenEscapeRoom.tsx
+│   │       TeenFoodTruck.tsx, TeenThemePark.tsx
 │   └── ui/                       # shadcn/ui primitives (Button, Card, Badge…)
 │
 ├── lib/
 │   ├── assessment.ts             # QUESTIONS array + scoreAssessment()
-│   ├── learning-styles.ts        # StyleKey types, LEARNING_STYLES, RECOMMENDATIONS, STUDY_TIPS
+│   ├── learning-styles.ts        # StyleKey types, LEARNING_STYLES,
+│   │                             # RECOMMENDATIONS, STUDY_TIPS
 │   ├── stages.ts                 # Stage definitions + getStages() per module
-│   ├── rw-content.ts             # Age-grouped Read/Write lesson content (4 age tiers)
+│   ├── rw-content.ts             # Age-grouped R/W lesson content (4 age tiers)
 │   ├── rw-types.ts               # TypeScript types for R/W lesson steps
 │   ├── rw-grading.ts             # Keyword-based short-answer grading logic
 │   ├── auditory-levels.ts        # Auditory lesson content per age group
@@ -554,7 +627,6 @@ stem-education-platform/
 │   └── placeholder-*.svg/png    # Layout placeholder assets
 │
 ├── Screenshots/                  # UI screenshots for documentation
-│
 ├── next.config.mjs               # Next.js configuration
 ├── tsconfig.json                 # TypeScript configuration
 ├── components.json               # shadcn/ui component registry config
@@ -572,7 +644,7 @@ stem-education-platform/
 <img src="Screenshots/onboarding.png" alt="SparkPath Onboarding Screen — Sparky Welcome" width="700">
 </div>
 
-> Sparky greets the child, explains the platform's mission, and begins the 7-step onboarding flow. No sign-up required.
+> Sparky greets the child, explains the platform's mission, and begins the 7-step onboarding flow. No sign-up, no password — everything is saved right on the device.
 
 ---
 
@@ -592,7 +664,7 @@ stem-education-platform/
 <img src="Screenshots/results.png" alt="SparkPath Results Screen — Visual Learner" width="700">
 </div>
 
-> After the assessment, the child sees their primary learning style, a full learning-mix bar chart, curated tool recommendations (filtered by style + age), and personalized study tips.
+> After the assessment, the child sees their primary learning style, a full learning-mix bar chart with all 4 style percentages, curated tool recommendations (filtered by style + age), and personalized study tips.
 
 ---
 
@@ -612,7 +684,7 @@ stem-education-platform/
 <img src="Screenshots/games.png" alt="Sparky's Brain Games Arcade" width="700">
 </div>
 
-> 12 research-valid mini-games across 6 categories. Each card shows game name, description, difficulty badge, duration, and a "Why play this?" rationale.
+> 12 research-valid mini-games across 6 categories. Each card shows game name, description, difficulty badge, duration, and a "Why play this?" rationale grounded in learning science.
 
 ---
 
@@ -654,7 +726,7 @@ We welcome contributions of all kinds — bug fixes, new brain games, new lesson
 - **Learning content** — never prescribe *what* to study; guide on *how* to learn and which tools help
 - **Child safety first** — all text and AI prompts must be age-appropriate, encouraging, and safe
 - **No new server-side state** — the app is intentionally zero-backend except for the chat API; profile state stays in `localStorage`
-- **Respect the VARK framework** — new assessment questions must map options to `StyleKey` values
+- **Respect the VARK framework** — new assessment questions must map all 4 options to unique `StyleKey` values
 
 ### Adding a New Brain Game
 
@@ -662,7 +734,7 @@ We welcome contributions of all kinds — bug fixes, new brain games, new lesson
 2. Add the game entry to the `gameCategories` array in `app/learn/games/page.tsx`
 3. Include `name`, `description`, `concept`, `difficulty`, `duration`, and `href`
 
-### Adding New R/W Lesson Content
+### Adding New Read/Write Lesson Content
 
 Age-grouped lesson content lives in [`lib/rw-content.ts`](lib/rw-content.ts). Each lesson follows this schema:
 
@@ -674,9 +746,9 @@ Age-grouped lesson content lives in [`lib/rw-content.ts`](lib/rw-content.ts). Ea
   xp: 20,
   steps: [
     { kind: "intro", title: "Step Title", body: "Intro text." },
-    { kind: "read-choice", prompt: "Question?", options: ["A", "B", "C", "D"], answer: 0 },
+    { kind: "read-choice", prompt: "Question?", options: ["A","B","C","D"], answer: 0 },
     { kind: "write-fill", prompt: "Fill: ___ is correct.", before: "", after: "", answers: ["answer"] },
-    { kind: "write-short", prompt: "Explain...", keywords: ["key1", "key2"], minKeywords: 1 },
+    { kind: "write-short", prompt: "Explain...", keywords: ["key1","key2"], minKeywords: 1 },
   ]
 }
 ```
@@ -730,8 +802,8 @@ SOFTWARE.
 
 <div align="center">
 
-Built with ❤️ for curious young minds everywhere.
+Built with ❤️ for every child who was told they weren't trying hard enough — when really, they just needed to learn differently.
 
-**[⭐ Star this repo](https://github.com/VipulMore11/Sparky)** if SparkPath sparks something in you!
+**[⭐ Star this repo](https://github.com/VipulMore11/Sparky)** if Sparky sparks something in you!
 
 </div>
