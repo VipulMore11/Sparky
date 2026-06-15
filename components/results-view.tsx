@@ -1,173 +1,257 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Check, Sparkles, ArrowRight } from "lucide-react"
-import { Mascot, SpeechBubble } from "@/components/mascot"
+import { ArrowRight, RefreshCw, Loader2, Sparkles, Info } from "lucide-react"
+import { Mascot } from "@/components/mascot"
 import { useProfile } from "@/lib/use-profile"
-import {
-  LEARNING_STYLES,
-  RECOMMENDATIONS,
-  STUDY_TIPS,
-  STYLE_ORDER,
-  type StyleKey,
-} from "@/lib/learning-styles"
-import { cn } from "@/lib/utils"
+import { useLearningProfile, type LearningMix } from "@/lib/use-learning-profile"
+import { LEARNING_MIX_STYLES } from "@/lib/learning-styles-names"
+import SHA256 from "crypto-js/sha256"
+import ReactMarkdown from "react-markdown"
+
+type AdviceResponse = {
+  studyTricks: string
+  parentTeachingStrategies: string
+  recommendedResources: string
+  parentHelpTips: string
+}
 
 export function ResultsView() {
   const router = useRouter()
   const { profile, ready } = useProfile()
+  const { percentages, loading: mixLoading } = useLearningProfile()
+  
+  const [advice, setAdvice] = useState<AdviceResponse | null>(null)
+  const [loadingAdvice, setLoadingAdvice] = useState(false)
+  const [error, setError] = useState(false)
+  const [cacheLoaded, setCacheLoaded] = useState(false)
 
+  // Load cached advice on mount (no API call)
   useEffect(() => {
-    if (ready && (!profile.assessmentComplete || !profile.primaryStyle)) {
-      router.replace("/")
+    if (!percentages || mixLoading) return
+    const hash = getHash(percentages)
+    const cacheKey = `gemini_advice_${hash}`
+    const cached = localStorage.getItem(cacheKey)
+    if (cached) {
+      try {
+        setAdvice(JSON.parse(cached))
+      } catch (e) {}
     }
-  }, [ready, profile.assessmentComplete, profile.primaryStyle, router])
+    setCacheLoaded(true)
+  }, [percentages, mixLoading])
 
-  if (!ready || !profile.primaryStyle || !profile.percentages) {
+  const getHash = (p: LearningMix) => {
+    // Round to integers to avoid floating point differences
+    const rounded = {
+      seeImagine: Math.round(p.seeImagine),
+      listenSpeak: Math.round(p.listenSpeak),
+      readWrite: Math.round(p.readWrite),
+      handsOnExplore: Math.round(p.handsOnExplore)
+    }
+    return SHA256(JSON.stringify(rounded)).toString()
+  }
+
+  const fetchAdvice = useCallback(async (forceRefresh = false) => {
+    if (!percentages || mixLoading) return
+    if (loadingAdvice) return
+
+    const hash = getHash(percentages)
+    const cacheKey = `gemini_advice_${hash}`
+
+    if (!forceRefresh) {
+      const cached = localStorage.getItem(cacheKey)
+      if (cached) {
+        try {
+          setAdvice(JSON.parse(cached))
+          return
+        } catch (e) {}
+      }
+    }
+
+    setLoadingAdvice(true)
+    setError(false)
+
+    try {
+      const res = await fetch("/api/generate-advice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(percentages)
+      })
+
+      if (!res.ok) throw new Error("Failed to fetch advice")
+
+      const data = await res.json()
+      setAdvice(data)
+      localStorage.setItem(cacheKey, JSON.stringify(data))
+    } catch (err) {
+      console.error(err)
+      setError(true)
+    } finally {
+      setLoadingAdvice(false)
+    }
+  }, [percentages, mixLoading, loadingAdvice])
+
+  if (!ready || mixLoading) {
     return (
       <div className="flex min-h-svh items-center justify-center text-muted-foreground">
-        Loading your result…
+        Loading your analysis...
       </div>
     )
   }
 
-  const primary = profile.primaryStyle
-  const style = LEARNING_STYLES[primary]
-  const Icon = style.icon
-  const age = profile.ageGroup ?? "middle"
-  const recs = RECOMMENDATIONS[primary][age]
-  const tips = STUDY_TIPS[primary]
-
   return (
-    <main className="mx-auto w-full max-w-3xl px-4 py-10">
-      {/* hero */}
-      <div className="flex flex-col items-center gap-5 text-center">
-        <SpeechBubble>
-          {profile.name ? `${profile.name}, you` : "You"}&apos;re mostly a{" "}
-          {style.shortName} learner!
-        </SpeechBubble>
-        <Mascot size={150} />
-      </div>
-
-      {/* primary style card */}
-      <section
-        className="mt-6 rounded-3xl border-2 border-b-4 p-6"
-        style={{ borderColor: style.colorVar, background: `color-mix(in oklab, ${style.colorVar} 12%, transparent)` }}
-      >
+    <main className="mx-auto w-full max-w-4xl px-4 py-10 font-sans">
+      {/* Header */}
+      <div className="flex flex-col items-center gap-5 text-center mb-10">
         <div className="flex items-center gap-4">
-          <span
-            className="flex h-14 w-14 items-center justify-center rounded-2xl"
-            style={{ background: style.colorVar, color: "var(--background)" }}
-          >
-            <Icon className="h-7 w-7" />
-          </span>
-          <div>
-            <h1 className="text-2xl font-extrabold">{style.name}</h1>
-            <p className="text-sm font-semibold" style={{ color: style.colorVar }}>
-              {style.tagline}
-            </p>
+          <Mascot size={120} animate />
+          <div className="bg-white text-[#131f24] p-4 rounded-2xl rounded-tl-none font-bold text-xl md:text-2xl shadow-sm border-2 border-[#E5E5E5] text-left">
+            {profile.name ? `${profile.name}, here's your learning mix!` : "Here's your learning mix!"}
+            <div className="text-sm text-[#52656d] font-normal mt-1">Based on your activity across the paths.</div>
           </div>
         </div>
-        <p className="mt-4 text-pretty leading-relaxed text-foreground/90">
-          {style.description}
-        </p>
-      </section>
+      </div>
 
-      {/* learning-style mix */}
-      <section className="mt-6 rounded-3xl border-2 border-border bg-card p-6">
-        <h2 className="text-lg font-extrabold">Your learning mix</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Most kids are a blend. Here&apos;s how yours broke down:
-        </p>
-        <div className="mt-4 flex flex-col gap-4">
-          {STYLE_ORDER.map((k: StyleKey) => {
-            const s = LEARNING_STYLES[k]
-            const pct = profile.percentages![k]
+      {/* Stacked Bar Chart Section */}
+      <section className="bg-white rounded-3xl border-2 border-[#E5E5E5] p-6 shadow-sm mb-8">
+        <h2 className="text-xl font-extrabold text-[#37464f] mb-4">Your Learning Profile</h2>
+        
+        <div className="h-10 w-full flex rounded-xl overflow-hidden mb-6 relative border-2 border-[#E5E5E5] bg-[#F7F7F7]">
+          {LEARNING_MIX_STYLES.map((style) => {
+            const pct = percentages[style.id as keyof LearningMix] || 0
+            if (pct === 0) return null
             return (
-              <div key={k} className="flex items-center gap-3">
-                <span className="w-24 shrink-0 text-sm font-bold">
-                  {s.shortName}
-                </span>
-                <div className="h-3 flex-1 overflow-hidden rounded-full bg-muted">
-                  <div
-                    className="h-full rounded-full transition-all duration-700"
-                    style={{ width: `${pct}%`, background: s.colorVar }}
-                  />
+              <div 
+                key={style.id}
+                className="h-full flex items-center justify-center text-white font-bold text-xs transition-all duration-1000 ease-out"
+                style={{ width: `${pct}%`, backgroundColor: style.color }}
+                title={`${style.name}: ${pct}%`}
+              >
+                {pct > 10 ? `${pct}%` : ""}
+              </div>
+            )
+          })}
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {LEARNING_MIX_STYLES.map((style) => {
+            const pct = percentages[style.id as keyof LearningMix] || 0
+            return (
+              <div key={style.id} className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-md shrink-0" style={{ backgroundColor: style.color }} />
+                <div className="flex flex-col">
+                  <span className="text-sm font-bold text-[#37464f] leading-tight">{style.name}</span>
+                  <span className="text-xs font-semibold text-[#52656d]">{pct}%</span>
                 </div>
-                <span className="w-10 shrink-0 text-right text-sm font-bold tabular-nums">
-                  {pct}%
-                </span>
               </div>
             )
           })}
         </div>
       </section>
 
-      {/* how to learn — tools */}
-      <section className="mt-6">
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-primary" />
-          <h2 className="text-lg font-extrabold">
-            How to learn your way — tools for you
+      {/* AI Insights Section - Manual trigger only */}
+      <section className="mb-10">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-extrabold text-[#37464f] flex items-center gap-2">
+            <Sparkles className="h-6 w-6 text-[#1CB0F6]" />
+            Personalised AI Insights
           </h2>
+          <button 
+            onClick={() => fetchAdvice(true)} 
+            disabled={loadingAdvice}
+            className="flex items-center gap-2 px-4 py-2 bg-[#1CB0F6] text-white rounded-xl text-sm font-bold hover:bg-[#1899D6] transition-colors disabled:opacity-50"
+          >
+            <RefreshCw className={`h-4 w-4 ${loadingAdvice ? "animate-spin" : ""}`} />
+            {advice ? "Regenerate Advice" : "Generate Advice"}
+          </button>
         </div>
-        <p className="mt-1 text-sm text-muted-foreground">
-          We don&apos;t tell you what to learn — just the best ways and tools to
-          learn it as a {style.shortName.toLowerCase()} learner.
-        </p>
-        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {recs.map((rec) => (
-            <div
-              key={rec.name}
-              className="rounded-2xl border-2 border-border bg-card p-4"
-            >
-              <div className="flex items-center justify-between gap-2">
-                <h3 className="font-extrabold">{rec.name}</h3>
-                <span
-                  className={cn(
-                    "rounded-full px-2 py-0.5 text-[10px] font-bold uppercase",
-                    rec.free
-                      ? "bg-primary/15 text-primary"
-                      : "bg-muted text-muted-foreground",
-                  )}
-                >
-                  {rec.free ? "Free" : "Paid"}
-                </span>
+
+        {/* Show info when no advice generated yet */}
+        {!advice && !loadingAdvice && (
+          <div className="bg-[#F7F7F7] border-2 border-[#E5E5E5] rounded-2xl p-8 text-center text-[#52656d]">
+            <Info className="h-10 w-10 mx-auto mb-3 text-[#1CB0F6]" />
+            <p className="text-lg font-medium">Click "Generate Advice" to get personalised study tips, parent strategies, and more based on your learning profile.</p>
+            <p className="text-sm mt-2">(AI analysis is free and limited; each profile combination is cached to avoid repeated requests.)</p>
+          </div>
+        )}
+
+        {loadingAdvice && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="bg-white rounded-3xl border-2 border-[#E5E5E5] p-6 animate-pulse">
+                <div className="h-6 bg-gray-200 rounded w-1/2 mb-4"></div>
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-200 rounded w-full"></div>
+                  <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                  <div className="h-4 bg-gray-200 rounded w-4/6"></div>
+                </div>
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">{rec.what}</p>
-              <p className="mt-2 text-sm leading-relaxed">{rec.how}</p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+
+        {advice && !loadingAdvice && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <AdviceCard 
+              title="Study Tricks" 
+              content={advice.studyTricks} 
+              color="#58CC71"
+            />
+            <AdviceCard 
+              title="Teaching Strategies for Parents" 
+              content={advice.parentTeachingStrategies} 
+              color="#1CB0F6"
+            />
+            <AdviceCard 
+              title="Recommended Resources" 
+              content={advice.recommendedResources} 
+              color="#FF9600"
+            />
+            <AdviceCard 
+              title="How Parents Can Help" 
+              content={advice.parentHelpTips} 
+              color="#CE82FF"
+            />
+          </div>
+        )}
+
+        {error && !loadingAdvice && (
+          <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-6 text-center text-red-700">
+            <p>Something went wrong while generating advice. Please try again later.</p>
+          </div>
+        )}
       </section>
 
-      {/* study tips */}
-      <section className="mt-6 rounded-3xl border-2 border-border bg-card p-6">
-        <h2 className="text-lg font-extrabold">Study tricks that suit you</h2>
-        <ul className="mt-3 flex flex-col gap-3">
-          {tips.map((tip) => (
-            <li key={tip} className="flex items-start gap-3">
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                <Check className="h-3.5 w-3.5" />
-              </span>
-              <span className="text-sm leading-relaxed">{tip}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* cta */}
-      <div className="mt-8 flex justify-center">
+      {/* CTAs */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pb-12">
+        <Link
+          href="/"
+          className="w-full sm:w-auto px-8 py-4 rounded-2xl border-2 border-[#E5E5E5] bg-white text-[#52656d] font-extrabold text-center uppercase tracking-wide transition-all hover:bg-[#F7F7F7] active:scale-95"
+        >
+          Retake Assessment
+        </Link>
         <Link
           href="/learn"
-          className="inline-flex items-center gap-2 rounded-2xl border-b-4 border-primary/40 bg-primary px-10 py-4 text-base font-extrabold tracking-wide text-primary-foreground transition-all hover:brightness-105 active:translate-y-0.5 active:border-b-2"
+          className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-[#1CB0F6] text-white font-extrabold text-center uppercase tracking-wide transition-all shadow-[0_4px_0_#1899D6] active:shadow-none active:translate-y-1"
         >
-          GO TO MY LEARNING PATH
-          <ArrowRight className="h-5 w-5" />
+          Go to My Learning Path <ArrowRight className="inline h-5 w-5 ml-1 -mt-1" />
         </Link>
       </div>
     </main>
+  )
+}
+
+function AdviceCard({ title, content, color }: { title: string; content: string; color: string }) {
+  return (
+    <div className="bg-white rounded-3xl border-2 border-[#E5E5E5] p-6 shadow-sm flex flex-col h-full">
+      <h3 className="text-lg font-extrabold mb-4 pb-2 border-b-2 border-[#F7F7F7]" style={{ color }}>
+        {title}
+      </h3>
+      <div className="prose prose-sm max-w-none text-[#37464f]">
+        <ReactMarkdown>{content}</ReactMarkdown>
+      </div>
+    </div>
   )
 }
