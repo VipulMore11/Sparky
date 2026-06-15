@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/icon.svg" alt="SparkPath Logo" width="80" height="80" />
+<!-- <img src="public/icon.svg" alt="SparkPath Logo" width="80" height="80" /> -->
 
 # ⚡ Sparky
 
